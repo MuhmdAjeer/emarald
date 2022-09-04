@@ -1,0 +1,219 @@
+<script defer src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+  $(document).ready( function () { $('#myTable').DataTable(); } );
+
+</script>
+
+<div class="container mt-5">
+  <div id="cardtable" class="card p-5">
+    {{! <h5 class="card-header">Rooms</h5> }}
+    <div class="table-responsive text-nowrap">
+      <table id="myTable" class="table-sm table">
+        <thead>
+          <tr>
+            {{! <th>Booking Id</th> }}
+            <th class="text">Username</th>
+            <th class="text">Hotel</th>
+            {{! <th class="text">Category</th> }}
+            <th class="text">Check-in</th>
+            <th class="text">Check-out</th>
+            <th class="text">Rooms</th>
+            <th class="text">Amount</th>
+            <th class="text">Options</th>
+
+          </tr>
+        </thead>
+        <tbody class="table-border-bottom-0">
+          {{#each bookings}}
+
+            <tr>
+              <td><strong>{{this.user.username}}</strong></td>
+              <td><strong>{{this.hotel.name}}</strong></td>
+              {{!-- <td class=""><strong>{{this.room.category}}</strong></td> --}}
+              <td class=""><strong>{{this.checkin}}</strong></td>
+              <td class=""><strong>{{this.checkout}}</strong></td>
+              <td class=""><strong>{{this.rooms}}</strong></td>
+              <td class=""><strong>&#8377;{{this.grandTotal}}</strong></td>
+              <td class="">
+
+                <button
+                  type="button"
+                  style="height: 27px;"
+                  class="btn btn-primary btn-sm"
+                  data-toggle="modal"
+                  data-target="#exampleModalCenter{{this._id}}"
+                >
+                  <i class="fa fa-info-circle" aria-hidden="true"></i>
+                </button>
+                <button class="btn btn-danger btn-sm">
+
+                  <i
+                    id="ban"
+                    class="fa fa-ban"
+                    onclick="cancelBooking('{{this._id}}')"
+                    aria-hidden="true"
+                  ></i>
+                </button>
+              </td>
+
+            </tr>
+            <div
+              class="modal fade"
+              id="exampleModalCenter{{this._id}}"
+              tabindex="-1"
+              role="dialog"
+              aria-labelledby="exampleModalCenterTitle"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                   
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body col-12 col-md-12">
+                           <div class="card">
+  <div class="card-header ">
+    <div class="">
+        <h6>Booking ID</h6>
+        <p>{{this._id}}</p>
+        <h6>Booked On : </h6><p>{{this.bookedTime}}</p>
+    </div>
+
+  </div>
+  <div class="card-body col-12">
+
+
+    <div class="row">
+        <div class="col-12 col-md-4  ">
+            <h6 class="text-dark">Guest</h6>
+            <h6>{{this.fullName}}</h6>
+        </div>
+        <div class="col-12 col-md-4">
+            <h6 class="text-dark" style="">Check In</h6>
+            <h6>{{this.checkin}}</h6>
+        </div>
+        <div class="col-12 col-md-4 ">
+            <h6 class="text-dark" >Check In Time</h6>
+
+
+            <h6>{{this.hotel.checkIn}}</h6>
+        </div>
+
+
+    </div>
+
+
+    <div class="row mt-3" >
+        <div class="col-12 col-md-4 ">
+            <h6  class="text-dark" style="">Phone</h6>
+            <h6>{{this.phone}}</h6>
+        </div>
+        <div class="col-12 col-md-4">
+            <h6 class="text-dark">Check Out</h6>
+            <h6>{{this.checkout}}</h6>
+        </div>
+        <div class="col-12 col-md-4 ">
+            <h6 class="text-dark" style="">Check Out Time</h6>
+
+            <h6>{{this.hotel.checkOut}}</h2>
+        </div>
+
+
+    </div>
+
+    <div class="row mt-3" >
+        <div class="" class="col-12 col-md-4 ">
+            <h6 class="text-dark">Email</h6>
+            <h6>{{this.email}}</h6>
+        </div>
+    </div>
+
+  <div class="row mt-3" >
+        <div class="col-12 col-md-4 ">
+            <h6 class="text-dark">Days</h6>
+            <h6>{{this.days}}</h6>
+        </div>
+
+        <div class="col-4 ">
+            <h6 class="text-dark">Rooms</h6>
+            <h6>{{this.rooms}}</h6>
+        </div>
+
+        <div class="col-4 ">
+            <h6 class="text-dark">Type</h6>
+
+            <h6 >{{this.room.category}}</h6>
+
+        </div>
+    </div>
+              <div class="border-top px-2 mx-2 mt-4 mb-4"></div>
+
+               <div class="row " >
+        <div class="col-4 ">
+            <h6>Amount Paid</h6>
+            <span>&#8377;</span><h6 style="font-weight: 900;" class="text-success">{{this.grandTotal}}</h6>
+        </div>
+              <div class="border-top px-2 mx-2"></div>
+            
+               {{!-- <div class="container">
+                 <h3 class="" style=" font-weight: 600;" >Thank you For Booking With Emarald!</h3>
+               </div> --}}
+           
+    </div>
+  </div>
+</div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          {{/each}}
+          <style>
+            .fa-red{ color: rgb(158, 0, 0) !important; }
+          </style>
+
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+</div>
+
+
+
+<!-- Modal -->
+
+<script>
+  const openModal = ()=>{
+     document.getElementById('modalbtn').click()
+      } 
+      const cancelBooking = (bookingId)=>{
+         Swal.fire({ 
+          width: 600,
+           padding: '3em', 
+           title: 'Do you want to Cancel the booking?',
+            showCancelButton: true,
+          confirmButtonText: 'Yes, Cancel', 
+          saveButtonText : 'Cancel' 
+          }).then((result) => { /* Read more about isConfirmed, isDenied below */
+           if (result.isConfirmed)
+  { $.ajax({ 
+    url : '/admin/cancel-booking', 
+    method :'get',
+     data : {
+       bookingId : bookingId
+        },
+   success : (response)=>{ 
+       $("#myTable").load(location.href + " #myTable");
+     Swal.fire('Cancelled!', '', 'success') } }) } }) }
+</script>

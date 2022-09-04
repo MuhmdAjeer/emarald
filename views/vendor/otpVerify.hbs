@@ -1,0 +1,174 @@
+{{!-- <form action="/otpauth" method="post">
+
+    <label for="">code</label>
+    <input type="number" name="code" id="code">
+    <button type="submit">submit</button>
+</form> --}}
+
+<script>  
+$(document).ready (function () {    
+  
+  $('form[id="otpcode"]').validate({  
+    rules: {  
+      code: {
+      required : true,
+      minlength : 6,
+      maxLength : 6  
+      }  
+    },  
+    messages: {  
+      code: {
+        required : 'Enter 6 Digit Code',
+        minlength : 'Enter 6 Digit Code',
+        maxLength : 'Enter 6 Digit Code'
+      }  
+        
+    },  
+     
+  });  
+});  
+</script>
+
+<div
+  class="container height-100 d-flex justify-content-center align-items-center"
+>
+  <div class="position-relative">
+    <div class="card  p-2 text-center">
+      <h6 class="pt-3">Please enter the one time password <br /> to verify your account</h6>
+      <div>
+        {{#if message}}
+        <p class="mb=0" style="color: red ">Wrong OTP</p>
+        {{/if}}
+        <span>A code has been sent to</span>
+        <small>{{data.phone}}</small>
+      </div>
+      <form id="otpcode" action="/vendor/otpAuth" method="post">
+      <div id="otp" class="row inputs d-flex flex-row justify-content-center mt-2">
+        
+        <input style="width: 100px;"
+          class="m-2 text-center form-control rounded"
+          type="number"
+          name="code"
+          id="code"
+          maxlength="6"
+          minlength="6"
+        
+          oninput="javascript : if(this.value.length > this.maxLength) this.value = this.value.slice(0,this.maxLength);"
+        />
+       
+          {{!-- <label id="code-error" class="error" for="code">This field is required</label> --}}
+       
+        <input type="hidden" name="username" value="{{data.username}}">
+        <input type="hidden" name="email" value="{{data.email}}">
+        <input type="hidden" name="password" value="{{data.password}}">
+        <input id="phone" type="hidden" value="{{data.phone}}" name="phone">
+
+      </div>
+      
+    <div class="mt-4 d-inline">
+        <button type="submit" class="btn btn-danger px-4 validate">Verify</button>
+      </div>
+      
+      </form>
+      <form action="/vendor/signup" method="post">
+       <input type="hidden" name="username" value="{{data.username}}">
+        <input type="hidden" name="email" value="{{data.email}}">
+        <input type="hidden" name="password" value="{{data.password}}">
+        <input id="phone" type="hidden" value="{{data.phone}}" name="phone">
+       
+        <div  class=" mt-2 content d-flex justify-content-center align-items-center">
+        <span>Didn't get the code</span>
+        <button  class="px" style="border: 0; color: red ; background-color: #ffffff00;" type="submit">Resend</button>
+        </div>
+        <div>
+        
+      <p><a href="/signup">Back to Signup Page</a></p>
+      </div>
+
+      </form>
+    </div>
+    <div class="card-2">
+      
+    </div>
+  </div>
+
+
+</div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(event) {
+  
+  
+</script>
+
+<style>
+    body {
+    background-color: white;
+}
+
+.height-100 {
+    height: 100vh
+}
+
+.card {
+    width: 400px;
+    border: none;
+    height: 300px;
+    box-shadow: 0px 5px 20px 0px #d2dae3;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+.card h6 {
+    color: #314192;
+    font-size: 20px
+}
+
+.inputs input {
+    width: 40px;
+    height: 40px
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0
+}
+
+.card-2 {
+    background-color: #fff;
+    padding: 10px;
+    width: 350px;
+    height: 100px;
+    bottom: -50px;
+    left: 20px;
+    position: absolute;
+    border-radius: 5px
+}
+
+.card-2 .content {
+    margin-top: 50px
+}
+
+.card-2 .content a {
+    color: #314192
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border: 2px solid #314192
+}
+
+.validate {
+    border-radius: 20px;
+    height: 40px;
+    background-color: #314192;
+    border: 1px solid #314192;
+    width: 140px
+}
+</style>

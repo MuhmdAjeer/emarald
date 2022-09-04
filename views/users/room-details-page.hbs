@@ -1,0 +1,256 @@
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
+/>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/combine/npm/moment@2.29.4,npm/moment@2.29.4/ender.min.js"></script>
+
+<!-- Slider main container -->
+
+	{{!-- <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> --}}
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<div class="container">
+  <div class="row">
+
+    <div class="col-12 col-md-6 mt-5 pt-5">
+      <div class="swiper">
+  <!-- Additional required wrapper -->
+  <div class="swiper-wrapper">
+    <!-- Slides -->
+    {{!-- <div class="swiper-slide">Slide 1</div>
+    <div class="swiper-slide">Slide 2</div>
+    <div class="swiper-slide">Slide 3</div> --}}
+    {{#each room.images}}
+    <div class="swiper-slide"> <img class="d-block w-100" src="/images/hotel-images/{{this}}" alt="First slide" /></div>
+{{/each}}
+    ...
+  </div>
+  <!-- If we need pagination -->
+  <div class="swiper-pagination"></div>
+
+  <!-- If we need navigation buttons -->
+  {{!-- <div class="swiper-button-prev"></div> --}}
+  {{!-- <div class="swiper-button-next "></div> --}}
+
+  <!-- If we need scrollbar -->
+  {{!-- <div class="swiper-scrollbar"></div> --}}
+</div>
+      
+
+                  
+                </div>
+
+                <div class="col-12 col-md-6 mt-5 pt-5">
+{{!-- 
+                    <h1>{{room.category}}</h1>
+
+                    <label for=""><h6>Check-in</h6></label>
+                    <input style="border: 1px solid rgba(59, 59, 59, 0.486); border-radius: 3px; padding: 3px;" type="date" step="7,4,1">
+
+                    <label for=""><h6>Check-out</h6></label>
+                    <input style="border: 1px solid rgba(59, 59, 59, 0.486); border-radius: 3px; padding: 5px;" type="date" step="7,4,1">
+                    
+                    <div class="mt-3">
+                      <label for="">Rooms</label>
+                    <button class="btn btn-primary ">-</button><span class="p-2">3</span><button class="btn btn-primary">+</button>
+                    </div> --}}
+
+                    <div class="card  mb-3" style="max-width: 53rem;     box-shadow: 0px 0px 10px #0000002e; border-radius: 0px; background-color: white;">
+  <div class="card-header">Booking Details</div>
+  <div class="card-body">
+    <h5 class="card-title">{{room.category}}</h5>
+    <input value="{{room.roomPrice}}" type="hidden" name="" id="roomPrice">
+
+   <div class="row">
+     <div class="col-6">
+    <label for="">Check-in</label>
+    <label class="d-flex mt-3" for="">Check-out</label>
+    <label class="mt-3" for="">Rooms</label>
+    <label class="mt-3 d-flex" for="">Total Price</label>
+
+
+    </div>
+    <div class="col-6">
+        <form  action="/booking-details" method="get" id="booking">
+                      <input id="roomId" type="text" name="roomId" hidden value="{{room._id}}">
+                      <input id="hotelId" type="text" name="hotelId" hidden value="{{room.hotelId}}">
+
+        {{!-- <input type="text" name="a" id="a"> --}} 
+    <input placeholder="Pick a Date" oninput="checkvalid(this)" onchange="calculateTotal(0)" class=""  required style="padding:5px ; border: 0 none; border-radius: 10px;" type="date" name="checkin" id="checkin">
+    <input  required onchange="calculateTotal(0)" class="mt-1" style="padding:5px ; border: 0 none; border-radius: 10px;" type="date" name="checkout" id="checkout">
+    <div class="mt-3">
+      <input type="text" hidden name="rooms" value="1" id="roomNo">
+      <button onclick="calculateTotal(-1)" type="button" id="minusbtn" class="btn btn-primary">-</button>
+    <span id="roomcount" style="padding-left: 5px; padding-right: 5px;">1</span>
+    <button onclick="calculateTotal(1)" type="button" class="btn btn-primary">+</button>
+
+    </div>
+    <h5   class="mt-3" style="font-family: Arial, Helvetica, sans-serif;">&#x20b9;<span id="priceTotal">{{room.roomPrice}}</span></h5>
+      <button type="submit" class="mt-4 mx-4 btn btn-success">Book Now</button>
+      {{#if unavailable}}
+      <script>
+          swal({
+          title: 'We are Sorry!',
+          text: 'Your required number of rooms are not available for some of the dates',
+          icon: "error",
+          button: "OK",
+          });
+      </script>
+      {{/if}}
+    </form>
+    </div>
+
+   </div>
+
+  
+  
+  </div>
+</div>
+
+                    
+
+                </div>
+  </div>
+</div>
+<style>
+::-webkit-datetime-edit-fields-wrapper { background: rgb(255, 255, 255); }
+::-webkit-datetime-edit-text { color: rgb(0, 0, 0); }
+::-webkit-datetime-edit-month-field { color: rgb(0, 0, 0); }
+::-webkit-datetime-edit-day-field { color: rgb(0, 0, 0); }
+::-webkit-datetime-edit-year-field { color: rgb(0, 0, 0); }
+::-webkit-inner-spin-button { display: none; }
+</style>
+
+<script>
+  function calculateTotal(inc){
+
+    var rooms = parseInt(document.getElementById('roomcount').innerHTML)//get roomcount
+    const checkIn = document.getElementById('checkin').value // get checkin date
+    const checkOut = document.getElementById('checkout').value // gets chekcout date
+    const roomPrice = document.getElementById('roomPrice').value // gets price of 1 room for calculating total price
+    rooms = rooms + inc // change room count by enterd value ( + , -)
+     document.getElementById('roomcount').innerHTML =  rooms
+    if(rooms == 1){
+      console.log('hellodd minus')
+      document.getElementById('minusbtn').disabled = true
+    }else{
+      document.getElementById('minusbtn').disabled = false
+    }
+
+    $.ajax({
+      url : '/add-total-price',
+      data : {
+        roomCount : rooms,
+        checkIn : checkIn,
+        checkOut : checkOut,
+        roomPrice : roomPrice
+      },
+      method : 'post',
+      success : (response)=>{
+        if(response < 0 ){
+          let dddd = document.getElementById('checkin').value
+          document.getElementById('checkout').value = moment(dddd).add(1, 'd').format('YYYY-MM-DD');
+        document.getElementById('priceTotal').innerHTML = roomPrice
+          console.log(document.getElementById('checkout').value)
+          console.log(document.getElementById('checkin').value)
+          return;
+        }
+        document.getElementById('priceTotal').innerHTML = response
+        console.log(response)
+        document.getElementById('roomNo').value = rooms
+        flatpickr("#checkout", {
+        minDate: new Date(checkIn)
+        });
+      }
+    })
+  }
+flatpickr("#checkin", {
+   minDate: "today"
+});
+
+function checkvalid(event){
+  console.log(event)
+  let checkin = document.getElementById('checkin').value 
+   let checkout = document.getElementById('checkout').value
+   if(moment(checkout).isBefore(checkin)){
+     document.getElementById('checkout').value = moment(checkin).add(1, 'd').format('YYYY-MM-DD');
+
+   }
+}
+
+
+let ddd = '2022-08-19'
+function disableDates(){
+  if(document.getElementById('checkout').value < document.getElementById('checkin').value){
+    document.getElementById('checkout').value = document.getElementById('checkin').value
+  }
+  document.getElementById('checkout').disabled = false
+  ddd = document.getElementById('checkin').value
+}
+
+flatpickr("#checkout", {
+   defaultDate : document.getElementById('checkin').value
+})    
+
+</script>
+<script>
+  const swiper = new Swiper('.swiper', {
+  // Optional parameters
+  direction: 'horizontal',
+  loop: true,
+
+  // If we need pagination
+  pagination: {
+    el: '.swiper-pagination',
+    dynamicBullets: true,
+  },
+
+  // Navigation arrows
+});
+$(document).ready(function() {
+    var today = new Date().toISOString().split('T')[0];
+    document.getElementById('checkin').value = today
+    document.getElementById('checkin').setAttribute('min', today);
+    document.getElementById('checkout').setAttribute('min', today);
+    document.getElementById('checkout').value = moment(today).add(1, 'd').format('YYYY-MM-DD');
+     document.getElementById('minusbtn').disabled = true
+});
+
+$('#booking').submit(function (evt) {
+    evt.preventDefault();
+    $.ajax({
+      url : '/booked-on-same-dates',
+      method : 'post',
+      data : $('#booking').serialize(),
+      success : (response)=>{
+          if(response.booked){
+Swal.fire({
+  title: 'You Already booked an hotel in the same date?',
+  text: "Do you wish to continue",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonText: 'Yes, Continue!'
+}).then((result) => {
+  if (result.isConfirmed) {
+    document.getElementById('booking').submit()
+  }
+})
+        }else{
+    document.getElementById('booking').submit()
+
+        }
+      }
+    })
+})
+
+
+</script>
+<style>
+  .swiper {
+   width: 525px;
+    height: 388px;
+   box-shadow: 0px 0px 10px #0000002e; border-radius: 0px;
+}
+</style>

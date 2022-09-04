@@ -1,0 +1,30 @@
+
+   <div class="row mb-5 ">
+ {{#each hotel}}
+                <div style="" class="col-md col-12 col-md-6 pt-3 ">
+                  <div class="card mb-3">
+                    <div class="row g-0">
+                      {{#each hotels.images}}
+                      <div style="background-image: url(/images/hotel-images/{{this}}); background-size: cover; border-radius: 5px;" class="col-md-4">
+                          {{!-- {{#each this.images}} --}}
+                        {{!-- <img class="card-img  card-img-left" style="object-fit: cover; min-height: 100px" src="/images/hotel-images/{{this.image}}" alt="Card image" /> --}}
+                      {{/each}}
+                      </div>
+                      <div class="col-md-8">
+                        <div class="card-body" style="min-height: 260px;max-height: 260px;">
+                          <h5 class="card-title">{{this.hotels.name}}</h5>
+                          <p class="card-text">
+                            {{this.hotels.description}}
+                          </p>
+                          <p class="card-text"><small class="text-muted">{{this.hotels.city}}</small></p>
+                      <a href="/vendor/hotel-info/{{this._id}}"><button class="btn btn-outline-primary">More Info</button></a>
+                      <p>{{this._id}}</p>
+                      <a href="/vendor/add-room?hotelId={{this._id}}"><button class="btn btn-primary">Add Room</button></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {{/each}}
+</div>
+ 

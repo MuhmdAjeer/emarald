@@ -1,0 +1,74 @@
+<script>
+  $(document).ready( function () {
+    $('#myTable').DataTable();
+} );
+</script>
+
+
+<div class="container mt-5">
+    <div id="cardtable" class="card p-5">
+                {{!-- <h5 class="card-header">Rooms</h5> --}}
+                <div class="table-responsive text-nowrap">
+                  <table id="myTable" class="table  ">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th class="text">Email</th>
+                        <th class="text">Phone</th>
+                      </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                {{#each vendors}}
+                        
+                      <tr>
+                        <td><strong>{{this.username}}</strong></td>
+
+                        <td class=""><strong>{{this.email}}</strong></td>
+                        <td class=""><strong>{{this.phone}}</strong></td>
+                        {{!-- <td class=""><strong>{{this.code}}</strong></td> --}}
+                                
+                        {{!-- <td>
+                            <div class="col-lg-4 col-md-6">
+                      <div class="mt-auto">
+
+
+                        <button type="button" class="btn btn-sm btn-danger mb-0" id="deleteBtn" data-toggle="modal" data-target="#exampleModalCenter{{this._id}}">
+                                X
+                          </button>
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter{{this._id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Delete Coupon</h5>
+        <p id="textj"></p>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       Are You Sure? Do you want to delete {{this.code}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="cancelbtn" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button onclick="deleteCoupon('{{this._id}}')" type="button" class="btn btn-danger">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+                      </div>
+                    </div>
+                        </td> --}}
+                      </tr>
+            {{/each}}
+                      
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+</div>

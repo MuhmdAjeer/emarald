@@ -1,0 +1,79 @@
+
+
+  <div class="row p-5">
+
+
+
+    <div class="mt-3 col-12"style="background-color: rgb(255, 255, 255);padding: 10px; border-radius: 15px; box-shadow: 15px black;">
+    <canvas height="100" width= "200" id="myChart" ></canvas>
+  </div>
+
+
+    <div  id="hh" class="mt-3 col-5 "style="background-color: rgb(255, 255, 255);padding: 10px; border-radius: 15px; box-shadow: 15px black;">
+        <select  onchange="categoryChart()" class="px-2 mt-2 mb-2 form-select col-4" style="border-radius: 5px; border:;"  name="" id="hotel">
+            {{#each hotels}}
+            <option value={{this._id}} >{{this.name}}</option>            
+            {{/each}}
+        </select>
+    <canvas height="200" width="200"  id="piechart" ></canvas>
+    </div>
+
+
+
+  </div>
+
+  <script>
+    const categoryChart = () => {
+    let hotelId = document.getElementById('hotel').value
+    console.log(hotelId);
+    $.ajax({
+      url: "hotelRoomCategoy",
+      method: "get",
+      data: {
+        hotelId: hotelId,
+      },
+      success: (response) => {
+        $("canvas#piechart").remove();
+
+
+         let canvas = document.createElement('canvas');   
+           canvas.setAttribute('id','piechart');     
+           canvas.setAttribute('width','200');     
+           canvas.setAttribute('height','200');     
+           document.querySelector('#hh').appendChild(canvas);
+         labels = response.map((rooms)=> rooms._id)
+         rooms = response.map((rooms)=> rooms.totalRooms)
+         ctx = document.getElementById('piechart').getContext("2d");
+         piechart = new Chart(ctx, {
+          type: "doughnut",
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                label: "My First Dataset",
+                data: rooms,
+                backgroundColor: [
+                  "rgb(255, 99, 132)",
+                  "rgb(54, 162, 235)",
+                  "rgb(255, 205, 86)",
+                ],
+                hoverOffset: 4,
+              },
+            ],
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true,
+                max: 10,
+              },
+            },
+          },
+        });
+        $("#piechart").load(location.href + " #piechart");
+      },
+    });
+    
+  };
+  </script>
+

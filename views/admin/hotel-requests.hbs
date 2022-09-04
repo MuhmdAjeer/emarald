@@ -1,0 +1,219 @@
+<script defer src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+  $(document).ready( function () { $('#myTable').DataTable(); } );
+
+</script>
+
+<div class="container mt-5">
+  <div id="cardtable" class="card p-5">
+    {{! <h5 class="card-header">Rooms</h5> }}
+    <div class="table-responsive text-nowrap">
+      <table id="myTable" class="table-sm table">
+        <thead>
+          <tr>
+            {{! <th>Booking Id</th> }}
+            <th class="text">Hotel</th>
+            <th class="text">City</th>
+            {{! <th class="text">Category</th> }}
+            <th class="text">Phone</th>
+            <th class="text">Check-in</th>
+            <th class="text">Check-out</th>
+
+            <th class="text">Options</th>
+
+          </tr>
+        </thead>
+        <tbody class="table-border-bottom-0">
+          {{#each hotels}}
+
+            <tr>
+              <td><strong>{{this.name}}</strong></td>
+              <td><strong>{{this.city}}</strong></td>
+              {{!-- <td class=""><strong>{{this.room.category}}</strong></td> --}}
+              <td class=""><strong>{{this.phone}}</strong></td>
+              <td class=""><strong>{{this.checkIn}}</strong></td>
+              <td class=""><strong>{{this.checkOut}}</strong></td>
+              <td class="">
+
+                <button
+                  type="button"
+                  style="height: 27px;"
+                  class="btn btn-primary btn-sm"
+                  data-toggle="modal"
+                  data-target="#exampleModalCenter{{this._id}}"
+                >
+                  <i class="fa fa-info-circle" aria-hidden="true"></i>
+                </button>
+                <button onclick="approveHotel('{{this._id}}')" class="btn btn-success btn-sm">
+
+                  <i
+                    id="ban"
+                    class="fa fa-check"
+                    
+                    aria-hidden="true"
+                  ></i>
+                </button>
+                <button onclick="denyHotel('{{this._id}}')" class="btn btn-danger btn-sm">
+
+                  <i
+                    id="ban"
+                    class="fa fa-ban"
+                    
+                    aria-hidden="true"
+                  ></i>
+                </button>
+              </td>
+
+            </tr>
+            <div
+              class="modal fade"
+              id="exampleModalCenter{{this._id}}"
+              tabindex="-1"
+              role="dialog"
+              aria-labelledby="exampleModalCenterTitle"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                   
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body col-12 col-md-12">
+                           <div class="card">
+  <div class="card-header ">
+    <div class="">
+        <h6>Vendor</h6>
+        <p>{{this.vendor.username}}</p>
+        <h6>Email: </h6><p>{{this.vendor.email}}</p>
+    </div>
+
+  </div>
+  <div class="card-body col-12">
+
+
+    <div class="row " >
+        <div class="col-12 col-md-4 ">
+            <h6  class="text-dark" style="">Phone</h6>
+            <h6>{{this.phone}}</h6>
+        </div>
+     
+
+
+    </div>
+
+
+
+
+
+
+
+               <div class="row " >
+      
+              <div class="border-top px-2 mx-2"></div>
+               <div class="col-12 col-md-4 mt-2 ">
+            <h6  class="text-dark" style="">Addres</h6>
+            <h6 style="max-width: 20px;">{{this.adress}}</h6>
+        </div>
+               {{!-- <div class="container">
+                 <h3 class="" style=" font-weight: 600;" >Thank you For Booking With Emarald!</h3>
+               </div> --}}
+           
+    </div>
+    <div class="row">
+    </div>
+            
+  </div>
+</div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          {{/each}}
+          <style>
+            .fa-red{ color: rgb(158, 0, 0) !important; }
+          </style>
+
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+</div>
+
+
+
+<!-- Modal -->
+
+<script>
+  const openModal = ()=>{
+     document.getElementById('modalbtn').click()
+      }
+
+
+      const approveHotel = (hotelId)=>{
+         Swal.fire({ 
+          width: 600,
+           padding: '3em', 
+           title: 'Do you want to Approve Hotel?',
+        showCancelButton: true,
+          confirmButtonText: 'Yes, Approve', 
+          saveButtonText : 'Cancel' 
+          }).then((result) => { /* Read more about isConfirmed, isDenied below */
+           if (result.isConfirmed)
+  { $.ajax({ 
+    url : '/admin/approve-hotel', 
+    method :'get',
+    data : {
+    hotelId : hotelId
+        },
+   success : (response)=>{ 
+    if(response.success){
+            $("#myTable").load(location.href + " #myTable");
+     Swal.fire('Approved!', '', 'success')
+    }else{
+     Swal.fire('Some error Caused!', '', 'error')
+    }
+      }
+      }) 
+      } })
+       }
+
+        const denyHotel = (hotelId)=>{
+         Swal.fire({ 
+          width: 600,
+           padding: '3em', 
+           title: 'Do you want to Deny Hotel request?',
+        showCancelButton: true,
+          confirmButtonText: 'Yes', 
+          saveButtonText : 'Cancel' 
+          }).then((result) => { 
+           if (result.isConfirmed)
+  { $.ajax({ 
+    url : '/admin/deny-hotel', 
+    method :'get',
+    data : {
+    hotelId : hotelId
+        },
+   success : (response)=>{ 
+    if(response.success){
+            $("#myTable").load(location.href + " #myTable");
+     Swal.fire('Approved!', '', 'success')
+    }else{
+     Swal.fire('Some error Caused!', '', 'error')
+    }
+      }
+      }) 
+      } })
+       }
+</script>

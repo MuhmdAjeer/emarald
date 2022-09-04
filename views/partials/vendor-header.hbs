@@ -1,0 +1,43 @@
+<style>
+    
+    .navbar-brand{
+        font-family: 'Alex Brush', cursive;
+        font-size: 2.5rem;
+        font-weight: bold;
+        
+    }
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-white" style="box-shadow: 0px 0px 25px #0000002e;">
+  <div class="container">
+    <a style="color: #314192;" class="navbar-brand" href="#">Emarald</a>
+    {{!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button> --}}
+      
+      <form class="d-flex">
+       {{!-- <div class="dropdown" > --}}
+  {{!-- <a style="background-color: #314192; border: 0px none ;" class="btn btn-secondary dropdown-toggle" href="/admin-logout"  role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+    
+  </a> --}}
+
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Profile
+  </button>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="/vendor/logout">Logut</a></li>
+    {{!-- <li><a class="dropdown-item" href="#">Another action</a></li>
+    <li><a class="dropdown-item" href="#">Something else here</a></li> --}}
+  </ul>
+</div>
+ 
+
+  {{!-- <ul  class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+    <li><a class="dropdown-item" href="#">User</a></li>
+    <li><a class="dropdown-item" href="#">Vendor</a></li>
+  </ul> --}}
+{{!-- </div> --}}
+      </form>
+    </div>
+</nav>

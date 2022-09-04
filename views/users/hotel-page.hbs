@@ -1,0 +1,286 @@
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
+/>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+<link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+
+<style>
+  body {
+    font-family: 'Poppins';
+}
+
+    @media only screen and (min-width: 600px) {
+  .imagemain{
+    max-width: 50%;
+  }
+}
+</style>
+
+
+<div class="container mt-5 ">
+
+    {{!-- image seciton --}}
+    {{#each hotel}}
+    <div class="row">
+        {{!-- <img  src="/images/hotel-images/{{this.image}}" class="img-fluid imagemain col-12" style="margin-top: 50px;" alt="Responsive image">   --}}
+         <div class="col-xs-12 col-md-6" style="margin-top: 50px;">
+                          <div class="swiper" id="swiper-main" style="width: 540px;
+    height: 350px;
+    box-shadow: 0px 0px 12px #00000059;
+    border-radius: 0px;
+     margin-right: 0; margin-top: 0;">
+  <!-- Additional required wrapper -->
+  <div class="swiper-wrapper">
+    <!-- Slides -->
+    {{!-- <div class="swiper-slide">Slide 1</div>
+    <div class="swiper-slide">Slide 2</div>
+    <div class="swiper-slide">Slide 3</div> --}}
+    {{#each this.image}}
+    {{!-- <dib class="swiper-slide"></dib> --}}
+    <div class="swiper-slide"> <img class="img-fluid" src="/images/hotel-images/{{this}}" alt="First slide" /></div>
+{{/each}}
+    ...
+  </div>
+  <!-- If we need pagination -->
+  <div class="swiper-pagination"></div>
+
+</div>
+         </div>  
+
+           
+            <div class="col-12 col-md-6 mt-5">
+            <h1 style="font-weight:900 ;">{{this.name}}</h1>
+            <div  style="margin-left: 4px;">
+
+            <div class="row mr-5">
+        
+
+            <h6 style="margin-top: -15px; margin-left: 13px;">{{this.city}}</h6>
+            </div>
+
+            <div class="row mr-5" style=" max-width: fit-content; max-height: fit-content;">
+              
+
+                {{#if rating}}
+                {{#each rating}}
+                <h2 style="font-weight: 700;margin-left: -3px;" class="col-2 text-center text-sucess pb-0">{{this.avgRating}}</h2>
+                <i  style="font-size: 28px; padding-left: 28px;" class="icon  mr-auto fa fa-star text-center text-warning col-2 pt-2 pb-0"></i>
+                {{!-- <p style="margin-top: -20px; padding-left: auto;" class="mx-auto">Ratings</p> --}}
+                {{/each}}
+
+                
+
+                {{else}}
+                <p style="margin-top: -20px; margin-left: 13px;" class=" mt-3">No Ratings Available</p>
+                {{/if}}
+    
+            </div>
+           
+            
+            </div>
+            <div>
+              <h5 style="font-weight: 800;">Hotel Polcies</h5>
+
+               {{!-- <div class="row"> --}}
+                 {{!-- <div class="col-3"> --}}
+                  <h6>Check-in</h6>
+                  <h6>{{this.checkIn}}</h6>
+                {{!-- </div> --}}
+                {{!-- <div class="col-3"> --}}
+                  <h6>Check-out</h6>
+                  <h6>{{this.checkOut}}</h6>
+                {{!-- </div> --}}
+               {{!-- </div> --}}
+
+            </div >
+              <div class="mt-3">
+
+
+            <a href="#rooms-section"><button class="btn btn-success">Book a Room</button></a>
+            <button onclick="addToWishlist('{{this._id}}')" class="btn btn-secondary">Add to Wishlist</button>
+
+              </div>
+            </div>   
+    </div>
+
+    {{!-- description and details section --}}
+      <div class="row">     
+     <div class="col-12 col-md-6 mt-5">
+            {{!-- <h1 style="font-weight:900 ;">{{this.name}}</h1> --}}
+            <div  style="margin-left: 17px;">
+
+            <div class="row">
+        
+
+            {{!-- <h6 style="margin-top: -15px;">{{this.city}}</h6> --}}
+            </div>
+
+            <div class="row">
+
+                <span style="color: black;" class="icon fa fa-map-marker"></span>
+            <h6 style="padding-left: 25px;"  class="text-dark mb-0">Location</h5>
+            <p style="margin-top: 25px; margin-left : -101px">{{this.adress}}</p>
+            </div>
+
+
+
+            <div class="row mt-3">
+
+                <span style="color: black;" class="icon fa fa-map-marker"></span>
+            <h6 style="padding-left: 25px"  class="text-dark mb-0">Description</h5>
+            <p class="mt-3" style="">{{this.description}}</p>
+            </div>
+            
+            </div>
+            </div> 
+
+
+
+            <div id="rooms-section" class="col-12 col-md-6 mt-5 mx-auto">
+              {{#if rooms}}
+                {{#each rooms}}
+
+
+
+
+    
+                  <div class="card w-100 mb-2" style=" box-shadow: 0px 0px 25px #0000002e;">
+                    <div class="card-body row">
+                      <div class="col-6">
+                      <h4 style="font-weight:800 ;" class="card-title text-dark">{{this.category}}</h4>
+                      <p class="card-text">Room Size<br><strong>{{this.roomSize}}</strong> sqft</p>
+                      <div class="swiper mb-0 pb-0" id="swiper">
+  <!-- Additional required wrapper -->
+  <div class="swiper-wrapper ">
+    <!-- Slides -->
+    {{!-- <div class="swiper-slide">Slide 1</div>
+    <div class="swiper-slide">Slide 2</div>
+    <div class="swiper-slide">Slide 3</div> --}}
+    {{#each images}}
+    <div class="swiper-slide d-xs-none "> <img class="d-block w-100" src="/images/hotel-images/{{this}}" alt="First slide" /></div>
+{{/each}}
+    ...
+  </div>
+  <!-- If we need pagination -->
+  <div class="swiper-pagination"></div>
+
+</div>
+                      {{!-- <a href="#" class="btn btn-primary">Button</a> --}}
+<style>
+  @media only screen and (max-width : 420px){
+    .s{
+      display: inline-grid !important;
+    }
+  }
+</style>
+                      <p>
+                        
+                        <div class="s" style="margin-top:-2rem !important;">
+
+                        <button  class="btn amt btn-sm btn-success" type="button" data-toggle="collapse" data-target="#collapseExample{{this._id}}" aria-expanded="false" aria-controls="collapseExample">
+                          Amenities
+                        </button>
+                         <a href="/hotel/room/{{this._id}}"><button class="btn btn-sm btn-info">Book</button></a>
+                        </div>
+                      </p>
+                      <div class="collapse" id="collapseExample{{this._id}}">
+                        <div class="card card-body mb-0" style="border: 0 none;">
+                            <ul>
+                              {{#each amenities}}
+                                <h6><li class="text-dark" >{{this}}</li></h6>
+                              {{/each}}
+                            </ul>
+                        </div>
+                      </div>
+                      <div style="" class=" text-center ">
+                        <h5 class="text-dark" style="font-family: Arial, Helvetica, sans-serif; font-weight: 900; max-width: max-content; padding-left: 5px; padding-right: 5px; border-radius: 5px;">&#x20b9;{{this.roomPrice}}</h5>
+                      </div>
+                      </div>
+                       
+                      
+                    
+                      {{!-- <img class="img-fluid col-2" height="10" width="90" src="/images/hotel-images/{{this.images}}" alt=""> --}}
+                   
+                    </div>
+                  </div>
+                
+                {{/each}}
+                {{else}}
+                <h3 class="mx-auto">No Rooms Available Currently!</h3>
+                {{/if}}
+
+            </div>
+
+            </div> 
+        {{/each}}
+</div>
+
+<script>
+  const swiper = new Swiper('.swiper', {
+  // Optional parameters
+  direction: 'horizontal',
+  loop: true,
+
+  // If we need pagination
+  pagination: {
+    el: '.swiper-pagination',
+    dynamicBullets: true,
+  },
+
+  // Navigation arrows
+});
+
+</script>
+<style>
+  .swiper {
+ margin-right: -264px;
+    width: 180px;
+    height: 120px;
+    box-shadow: 0px 0px 10px #0000002e;
+    border-radius: 0px;
+    margin-top: -80px;
+}
+@media only screen and (max-width : 600px){
+  #swiper{
+    margin-right: -160px;
+    height: auto;
+  }
+
+  #swiper-main {
+    width: 100% !important ;
+    height: 287px !important;
+    box-shadow: 0px 0px 10px #0000002e !important; 
+    border-radius: 0px !important;
+}
+.amt{
+  margin-bottom: 10px;
+}
+}
+</style>
+
+<script>
+	function addToWishlist(hotelId){
+
+		const data = {
+			hotelId : hotelId
+		}
+		$.ajax({
+			url : '/add-to-whishlist',
+			method : 'post',
+			data : data,
+			success : (response)=>{
+				console.log(response)
+				if(response.status){
+
+					swal("", "Hotel Added To Whishlist!", "success");
+
+				}else{
+					swal("", "Hotel already in the wishlist", "info");
+				}
+			}
+		})
+	}
+</script>
+		

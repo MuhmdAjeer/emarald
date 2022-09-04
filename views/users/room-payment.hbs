@@ -1,0 +1,140 @@
+<link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+<style>
+body {
+    font-family: 'Poppins';
+}
+<style>
+  textarea:focus, input:focus{
+outline: none;
+}
+</style>
+
+<section class="" style="background-color: #eee; margin-top: 90px;">
+  <div id="container11" class="container py-5">
+    <div class="card " style="box-shadow: black;">
+      <div class="card-body">
+        <div class="row d-flex justify-content-center pb-5">
+          <div class="col-md-7 col-xl-5 mb-4 mb-md-0" style=" box-shadow: 0px 0px 25px #0000002e; border-radius: 3px;">
+            <div class="py-4 d-flex flex-row">
+        
+              <h5 class=""><b>BOOKING DETAILS</b></h5>
+              {{!-- <span class="ps-2">Pay</span> --}}
+            </div>
+            {{!-- <h4 class="text-success">$85.00</h4> --}}
+            <h4>Enter Your Details</h4>
+            <div class="d-flex pt-2">
+              <div>
+                <p>
+                  We will use these details to share your booking information
+                </p>
+              </div>
+ 
+            </div>
+            <b>
+              Full Name
+            </b>
+            <div class="rounded d-flex" style="background-color: #f8f9fa;">
+              <div  class="p-2"><input value="{{user.username}}" name="fullname" id="fullname" style="border: none; background-color: #f8f9fa;" type="text"></div>
+      
+            </div>
+
+            <b>
+              Email address
+            </b>
+            <div class="rounded d-flex" style="background-color: #f8f9fa;">
+              <div  class="p-2"><input disabled value="{{user.email}}" name="email" id="email" style="border: none; background-color: #f8f9fa;" type="text"></div>
+             
+            </div>
+
+             <b>
+              Phone Number
+            </b>
+            <div class="rounded d-flex" style="background-color: #f8f9fa; ">
+              <div  class="p-2"><input disabled value="{{user.phone}}" name="phone" id="phone" style="border: none; background-color: #f8f9fa;" type="text"></div>
+             
+            </div>
+            <hr />
+      
+          </div>
+
+          <div class="col-md-5 col-xl-4 offset-xl-1">
+            <div class="py-4 d-flex justify-content-end">
+              <h6><a href="#!">Cancel and return to website</a></h6>
+            </div>
+                <div>Do you have any coupons? <br> Redeem Now</div>
+        <div class="mb-3"> <input id="code"  onkeyup="btnDisable()" class="pl-3" style="border: none; background-color: #f8f9fa;" type="text"> <button  disabled onclick="addcoupon('{{bookingData.totalPrice}}')" id="codebtn" class="ml-4 btn btn-sm btn-success">Apply</button></div>
+        <div><p hidden class="text-danger" id="couponerror">Coupon not available</p></div>
+            <div class="rounded d-flex flex-column p-2" id="codebtn" style="background-color: #ffffff;  box-shadow: 0px 0px 20px #0000002e; border-radius: 0px;">
+              <div class="p-2 me-3">
+                <h4>Booking Recap</h4>
+              </div>
+              <div class="p-2 d-flex">
+                <div class="col-8">Room Price Per Day</div>
+                <div class="ms-auto"><span>&#8377; </span>{{room.roomPrice}}</div>
+              </div>
+              <div class="p-2 d-flex">
+                <div class="col-8">No of Rooms</div>
+                <div class="ms-auto">{{bookingData.rooms}}</div>
+              </div>
+              <div class="p-2 d-flex">
+                <div class="col-8">No of Days</div>
+                <div class="ms-auto">{{bookingData.days}}</div>
+              </div>
+
+
+              <div class="border-top px-2 mx-2"></div>
+              <div class="p-2 d-flex pt-3">
+                <div class="col-8">Price for {{bookingData.days}} Days x {{bookingData.rooms}} Rooms</div>
+                <div class="ms-auto"><span>&#8377; </span><span id="totalspan">{{bookingData.totalPrice}}</span></div>
+              </div>
+              {{!-- <div class="p-2 d-flex">
+                <div class="col-8">
+                  Maximum out-of-pocket on Insurance Policy (not reached)
+                </div>
+                <div class="ms-auto">$6500.00</div>
+              </div> --}}
+              {{!-- <div class="border-top px-2 mx-2"></div>
+              <div class="p-2 d-flex pt-3">
+                <div class="col-8">Insurance Responsibility</div>
+                <div class="ms-auto"><b>$71.76</b></div>
+              </div> --}}
+              {{!-- <div class="p-2 d-flex">
+                <div class="col-8">
+                  Patient Balance <span class="fa fa-question-circle text-dark"></span>
+                </div>
+                <div class="ms-auto"><b>$71.76</b></div>
+              </div> --}}
+              <div class="border-top px-2 mx-2"></div>
+
+               <div class="p-2 d-flex pt-3">
+                <div hidden id="couponcode" class="col-8"></div>
+                <div hidden id="pricediv" class="ms-auto"><span>&#8377; </span><span id="couponPrice"></span></div>
+                <div hidden style="white-space: pre;" onclick="removecoupon()"  id="removecoupon" class="ms-auto text-danger">   X</div>
+              </div>
+
+
+              <div class="border-top px-2 mx-2"></div>
+
+              <div class="p-2 d-flex pt-3">
+                <div class="col-8"><b>Total</b></div>
+                <div class="ms-auto"><b id="grandtotal" class="text-success"><span>&#8377; </span>{{bookingData.totalPrice}}</b></div>
+              </div>
+            </div>
+            <p hidden id="err" class="text-danger">Please fill booking details</p>
+            <input type="button" onclick="createOrder('{{json bookingData}}','{{json user}}' , '{{json room}}')" value="Proceed to payment" class="btn btn-success btn-block btn-lg mt-3" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+       
+           
+
+      
+
+ 
+</script>
+

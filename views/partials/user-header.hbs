@@ -1,0 +1,56 @@
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+		<div class="container">
+			<a class="navbar-brand text-primary"  href="/home">Emarald<span>Book Your Rooms</span></a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="oi oi-menu"></span> Menu
+			</button>
+
+			<div class="collapse navbar-collapse" id="ftco-nav">
+				<ul class="navbar-nav  ml-auto">
+					<li class="d-block d-sm-none nav-item active"><a href="index.html" class="nav-link">Home</a></li>
+					{{!-- <li class="nav-item"><a href="about.html" class="nav-link">About</a></li> --}}
+					{{!-- <li class="nav-item"><a href="destination.html" class="nav-link">Destination</a></li> --}}
+					{{#if user}}
+					<li class="d-block  d-sm-block d-lg-none nav-item"><a href="/bookings" class="nav-link">My Booking</a></li>
+					<li class="d-block  d-sm-block d-lg-none  nav-item"><a href="hotel.html" class="nav-link">My Profile</a></li>
+					<li class="d-block  d-sm-block d-lg-none  nav-item"><a href="/wishlists" class="nav-link">My Wishlists</a></li>
+					<li class="d-block  d-sm-block d-lg-none nav-item "><a href="/logout" class="nav-link">Logout</a></li>
+					{{else}}
+					<li class="d-block d-sm-block d-lg-none nav-item"><a href="/login" class="nav-link">Login</a></li>
+					<li class="d-block d-sm-block d-lg-none nav-item"><a href="/signup" class="nav-link">Signup</a></li>
+					<li class="d-block d-sm-block d-lg-none nav-item"><a href="hotel.html" class="nav-link">List My Hotel</a></li>
+
+					 {{/if}}
+                    <li class="nav-item nav-link d-none d-lg-block">
+                       <div class="dropdown " style="margin-top: 10px;" >
+  <button class="btn btn-primary  dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+    {{#if user}}
+        {{user.username}}
+    {{else}}
+    Login/Signup
+    {{/if}}
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+
+     {{#if user}}
+    <li><a class="dropdown-item" href="/profile">My Profile</a></li>
+    <li><a class="dropdown-item" href="/bookings">My Booking</a></li>
+    <li><a class="dropdown-item" href="/wishlists">My Wishlists</a></li>
+    <li><a class="dropdown-item" href="/logout">Logout</a></li>
+
+    {{else}}
+    <li><a class="dropdown-item" href="/login">Login</a></li>
+    <li><a class="dropdown-item" href="/signup">Signup</a></li>
+    <li><a class="dropdown-item" href="#">List My Hotel</a></li>
+
+    
+    {{/if}}
+  </ul>
+</div>
+                    </li>
+        			{{!-- <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li> --}}
+					{{!-- <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li> --}}
+				</ul>
+			</div>
+		</div>
+	</nav>

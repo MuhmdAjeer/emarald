@@ -1,0 +1,74 @@
+<script>
+  $(document).ready( function () {
+    $('#myTable').DataTable();
+} );
+</script>
+
+
+<div class="container mt-5">
+    <div id="cardtable" class="card p-5">
+                {{!-- <h5 class="card-header">Rooms</h5> --}}
+                <div class="table text-nowrap">
+                  <table id="myTable" class="table  ">
+                    <thead>
+                      <tr>
+                        <th>Username</th>
+                        <th class="text">Email</th>
+                        <th class="text">Phone</th>
+                        <th class="text">Block</th>
+
+                      </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                {{#each users}}
+                        
+                      <tr>
+                        <td><strong>{{this.username}}</strong></td>
+
+                        <td class=""><strong>{{this.email}}</strong></td>
+                        <td class=""><strong>{{this.phone}}</strong></td>
+                        {{#if this.isBlocked}}
+                        <td class=""><button class="btn btn-sm btn-success" onclick="blockUser('{{this._id}}',false)" >Unblock</button></a></td>
+                        {{else}}
+                        <td class=""><button class="btn btn-sm btn-danger" onclick="blockUser('{{this._id}}',true)" >Block</button></a></td>
+                        {{/if}} 
+                      </tr>
+            {{/each}}
+                      
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+</div>
+
+<script>
+  const blockUser = (userId,value)=>{
+    $.ajax({
+      url : '/admin/block-user',
+      method:'get',
+      data : {
+        userId : userId,
+        value : value
+      },
+      success : (response)=>{
+        if(response.success){
+         $("#myTable").load(location.href + " #myTable");
+swal({
+                                    title: "Updated!",
+                                    text: "Details have been successfully updated",
+                                    icon: "success",
+                                    button: "OK",
+                                    });
+
+        }else{
+          swal({
+                                    title: "Cant update details",
+                                    text: 'Please Try again',
+                                    icon: "error",
+                                    button: "OK",
+                                    });
+        }
+      }
+    })
+  }
+</script>

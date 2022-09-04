@@ -1,0 +1,88 @@
+<div class="row mt-5">
+      <div class="col-8 mx-auto">
+        <div class="card mb-4">
+          <div
+            class="card-header d-flex justify-content-between align-items-center"
+          >
+            <h5 class="mb-0">Add Rooms</h5>
+
+          </div>
+          <div class="card-body">
+            <form
+           
+              id="add-room"
+              method="post"
+              action="/vendor/add-roomDetails"
+              class="col-10 mx-auto"
+              enctype="multipart/form-data"
+            >
+    
+
+             <div class="mb-3">
+
+                        <label for="exampleFormControlSelect1" class="form-label">Select Room Category</label>
+                        <select name="category" class="form-select" id="exampleFormControlSelect1" aria-label="Default select example">
+
+                            {{#each categories}}
+                      
+                          <option value="{{this}}">{{this}}</option>
+    
+                          {{/each}}
+                        </select>
+                      </div>
+
+                      <div>
+                        <label for="defaultFormControlInput" class="form-label">Room Size</label>
+                        <input
+                          type="number"
+                          name="roomSize"
+                          class="form-control"
+                          id="roomSize"
+                          placeholder="John Doe"
+                          aria-describedby="defaultFormControlHelp"
+                        />
+                        
+
+                      </div>
+
+                       <div>
+                        <label for="defaultFormControlInput" class="form-label">Price</label>
+                        <input
+                          type="number"
+                          name="roomPrice"
+                          class="form-control"
+                          id="roomPrice"
+                          placeholder="John Doe"
+                          aria-describedby="defaultFormControlHelp"
+                        />
+                        
+
+                      </div>
+
+                      <div class="mb-3">
+                        <label for="formFileMultiple" class="form-label">Upload 3 Room Images</label>
+                        <input name="image" class="form-control" multiple type="file" id="formFileMultiple" />
+                      </div>
+
+                      {{!-- checkboes --}}
+                      <h6 class="mt-4">Add Room Amenities</h6>
+
+                       
+                      {{#each amenities}}
+
+                        <div class="form-check  mt-3">
+                            <input name="{{this}}" class="form-check-input" type="checkbox" value=true id="defaultCheck1" />
+                            <label class="form-check-label" for="defaultCheck1">{{this}}</label>
+                          </div>
+
+                          {{/each}}
+                 
+           
+              
+              <button type="submit" class="btn btn-primary mt-3">Send</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div>

@@ -1,0 +1,109 @@
+<div class="row mt-5">
+      <div class="col-8 mx-auto">
+        <div class="card mb-4">
+          <div
+            class="card-header d-flex justify-content-between align-items-center"
+          >
+            <h5 class="mb-0">Enter Hotel Details</h5>
+
+            <!-- Modal -->
+
+           <!-- Modal -->
+
+          </div>
+          <div class="card-body">
+            <form
+            enctype="multipart/form-data"
+              id="add-hotel"
+              method="post"
+              action="/vendor/edit-hotel"
+              class="col-10 mx-auto"
+            >
+            <input type="hidden" value="{{hotel._id}}" name="hotelId">
+
+            <input type="hidden" value="{{hotel.vendorId}}" name="vendorId">
+
+              <div class="mb-3">
+                <label class="form-label" for="basic-default-fullname">Hotel
+                  Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="name"
+                  id="name"
+                  value="{{hotel.name}}"
+                />
+              </div>
+              <div class="mb-3">
+                <label
+                  class="form-label"
+                  for="basic-default-company"
+                >City</label>
+                <input
+                  type="text"
+                  name="city"
+                  class="form-control"
+                  id="city"
+                  value="{{hotel.city}}"
+                />
+              </div>
+              <div class="mb-3">
+                <label
+                  class="form-label"
+                  for="basic-default-message"
+                >Adress</label>
+                <textarea
+                  id="Adress"
+                  class="form-control"
+                  name="adress"
+                  value="{{hotel.adress}}"
+                >{{hotel.adress}}</textarea>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label" for="basic-default-phone">Phone No</label>
+                <input
+                  type="text"
+                  id="phone"
+                  name="phone"
+                  class="form-control phone-mask"
+                  value="{{hotel.phone}}"
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="basic-default-message">Hotel
+                  Description</label>
+                <textarea
+                  id="description"
+                  class="form-control"
+                  name="description"
+                  {{!-- value="{{hotel.description}}" --}}
+                >{{hotel.description}}</textarea>
+              </div>
+
+               <div class="mb-3">
+                        <label for="formFileMultiple" class="form-label">Upload a Hotel Image</label>
+                        <input  name="image"  class="form-control" type="file" multiple id="image" />
+                      </div>
+
+                       <div class="mb-3 row">
+                        <label for="html5-time-input" class="col-md-2 col-form-label">Check In</label>
+                        <div class="col-md-10">
+                          <input class="form-control" type="time" name="checkIn" value="{{hotel.checkIn}}" id="html5-time-input" />
+                        </div>
+                      </div>
+                       <div class="mb-3 row">
+                        <label for="html5-time-input" class="col-md-2 col-form-label">Check Out</label>
+                        <div class="col-md-10">
+                          <input class="form-control" name="checkOut" type="time" value="{{hotel.checkOut}}" id="html5-time-input" />
+                        </div>
+                      </div>
+           
+              
+              <button type="submit" class="btn btn-primary">Send</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div>

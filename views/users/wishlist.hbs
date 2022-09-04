@@ -1,0 +1,76 @@
+<style>
+
+    @media only screen and (min-width: 600px) {
+  .imagemain{
+    max-width: 50%;
+  }
+}
+</style>
+
+
+<div class="container mt-5 pt-5 ">
+
+    
+
+    {{!-- image seciton --}}
+    {{!-- {{#each hotels}} --}}
+{{#if hotels}}
+<table id="table1" class="table" style="box-shadow: 0px 0px 10px #a7a7a72e;">
+  <thead>
+    <tr>
+      {{!-- <th scope="col">#</th> --}}
+      <th scope="col">Image</th>
+      <th scope="col">Hotel</th>
+      <th scope="col">City</th>
+      <th scope="col">Options</th>
+
+      
+    </tr>
+  </thead>
+  <tbody>
+    {{#each hotels}}
+    <tr>
+      <th><img class="img img-fluid" height="10" width="90" src="/images/hotel-images/{{image.[0]}}" alt=""></th>
+      <td class="pt-4">{{name}}</td>
+      <td class="pt-4">{{city}}</td>
+      <td class="pt-4">
+        <div class="d-flex">
+            <div class="col-md-2">
+            <a href="/hotel/{{_id}}">
+        <button class="btn btn-primary mr-2 ">Book</button>
+        </a>
+        </div>
+        <div class="col-md-2">
+            <a>
+            <button onclick="removeFromWishlist('{{_id}}')" class="btn btn-danger">Remove</button>
+            </a>
+        </div>
+        </div>
+            </td>
+    </tr>
+    {{/each}}
+  
+  </tbody>
+</table>
+{{else}}
+<h1 class="mt-5 pt-5 mb-4 pb-5" style="font-weight: 900;">Nothing in Wishlist!</h1>
+{{/if}}
+        {{!-- {{/each}} --}}
+</div>
+
+<script>
+
+    function removeFromWishlist(hotelId){
+        console.log('dfsfsadccccc')
+    $.ajax({
+        url : '/remove-from-wishlist',
+        method : 'post',
+        data : {
+            hotelId : hotelId
+        },
+        success : (response)=>{
+           $("#table1").load(location.href + " #table1");
+        }
+    })
+    }
+</script>

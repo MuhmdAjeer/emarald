@@ -1,0 +1,103 @@
+ <script  src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+ <script src="cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+ <script src="https://cdn.jsdelivr.net/combine/npm/chart.js@3.9.1,npm/cleave.js@1.6.0,npm/jquery-validation@1.19.5"></script>
+ 
+
+<div class="card  mt-1 p-5 pt-1 col-12">
+                <h5 class="card-header">My Hotels</h5>
+                <div class="table-hover  table-light table-responsive-sm tex-nowrap">
+                  <table id="myTables" style="margin: 0;" class="table col-12">
+                    <thead class="p-0 text-center">
+                      <tr>
+                        <th>Name</th>
+                        <th>City</th>
+                        <th>Edit</th>
+                        <th>Rooms</th>
+                        <th>Bookings</th>
+                        <th>Service</th>
+
+          
+                      </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                      
+                      
+                     {{#each hotels}} 
+                      <tr class="m-0 p-0 text-center">
+                        <td >
+                          <i class="fab fa-bootstrap fa-lg text-primary "></i> <strong>{{this.name}}</strong>
+                        </td>
+                        <td  >{{this.city}}</td>
+
+                        <td>
+                            <a href="/vendor/edit-hotel/{{this._id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                        </td>
+
+                        <td>
+                    
+                            <a href="/vendor/add-rooms?hotelId={{this._id}}"><i class="fa fa-plus mr-2" aria-hidden="true"></i></a>
+                            <a href="/vendor/view-rooms?hotelId={{this._id}}"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                            
+                        </td>
+
+                        <td>
+                            <a href="/vendor/bookings/{{this._id}}"><i class="fa fa-inbox" aria-hidden="true"></i></a>
+                        </td>
+                        <td>
+                          {{#if this.disabled}}
+                            <button onclick="disableHotel('{{this._id}}' , false)" class="m-0 btn-sm btn btn-success">Enable Services</button>
+                          {{else}}
+                            <button onclick="disableHotel('{{this._id}}' ,true)" class="m-0 btn-sm btn btn-danger">Disable Services</button>
+                          {{/if}}
+                        </td>
+
+                        
+                        
+                        {{!-- <td><span class="badge bg-label-warning me-1">Pending</span></td> --}}
+                      </tr>
+                      {{/each}}
+                    </tbody >
+                  </table>
+                </div>
+              </div>
+
+
+
+              <script>
+                const disableHotel = (hotelId,value)=>{
+                  
+                  $.ajax({
+                    url : '/vendor/disableHotel',
+                    method : 'get',
+                    data : {
+                      hotelId : hotelId,
+                      value : value
+                    },
+                    success : (response)=>{
+                      if(response.success){
+                        $("#myTables").load(location.href + " #myTables");
+                                    swal({
+                                    title: "Updated!",
+                                    text: "Details have been successfully updated",
+                                    icon: "success",
+                                    button: "OK",
+                                    });
+                      }else{
+                       swal({
+                                    title: "Cant update details",
+                                    text: 'Please Try again',
+                                    icon: "error",
+                                    button: "OK",
+                                    });
+                      }
+                    }
+                  })
+                }
+              </script>
+ <script>
+  $(document).ready( function () {
+    $('#myTables').DataTable();
+
+
+} );
+</script>

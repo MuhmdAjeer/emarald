@@ -1,0 +1,86 @@
+<script>
+  $(document).ready( function () {
+    $('#myTable').DataTable();
+} );
+</script>
+<script defer src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+
+<div class="container mt-5">
+    <div id="cardtable" class="card p-5">
+                {{!-- <h5 class="card-header">Rooms</h5> --}}
+                <div class="table-responsive text-nowrap">
+                  <table id="myTable" class="table  ">
+                    <thead>
+                      <tr>
+                        <th class="text">Username</th>
+                        <th class="text">Room Category</th>
+                        <th class="text">Check-in</th>
+                        <th class="text">Check-out</th>
+                        <th class="text">Rooms</th>
+                        <th class="text">Amount</th>
+                        <th class="text">Cancel</th>
+
+                      </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                {{#each bookings}}
+                        
+                      <tr>
+                        <td><strong>{{this.fullName}}</strong></td>
+
+                {{#each room-details}}
+
+                        <td class=""><strong>{{this.category}}</strong></td>
+                {{/each}}
+
+                {{!-- {{#each bookings}} --}}
+                        <td class=""><strong>{{this.checkin}}</strong></td>
+                        <td class=""><strong>{{this.checkout}}</strong></td>
+                        <td class=""><strong>{{this.rooms}}</strong></td>
+                        <td class=""><strong>&#8377;{{this.grandTotal}}</strong></td>
+                        <td>
+                                          <button class="btn btn-danger btn-sm">
+
+                  <i
+                    id="ban"
+                    class="fa fa-ban"
+                    onclick="cancelBooking('{{this._id}}')"
+                    aria-hidden="true"
+                  ></i>
+                </button>
+                        </td>
+                        
+
+
+                      </tr>
+            {{/each}}
+                      
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+</div>
+
+<script>
+        const cancelBooking = (bookingId)=>{
+         Swal.fire({ 
+          width: 600,
+           padding: '3em', 
+           title: 'Do you want to Cancel the booking?',
+            showCancelButton: true,
+          confirmButtonText: 'Yes, Cancel', 
+          saveButtonText : 'Cancel' 
+          }).then((result) => { /* Read more about isConfirmed, isDenied below */
+           if (result.isConfirmed)
+          { $.ajax({ 
+            url : '/admin/cancel-booking', 
+            method :'get',
+            data : {
+              bookingId : bookingId
+                },
+          success : (response)=>{ 
+              $("#myTable").load(location.href + " #myTable");
+            Swal.fire('Cancelled!', '', 'success') } }) } }) }
+</script>
